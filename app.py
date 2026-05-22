@@ -204,9 +204,24 @@ def init_db():
         conn.commit()
         return conn
     except psycopg2.OperationalError as e:
+        error_str = str(e)
         st.error("🚨 **Database Connection Rejected by Supabase**")
-        st.warning("If your database password has special characters (like `@`, `#`, `?`), it breaks the connection URL! You must URL-encode them. (For example, change `@` to `%40` in your password inside the URL).")
-        st.info(f"Technical Details: {e}")
+
+        if "Tenant or user not found" in error_str:
+            st.warning("This means your **Supabase Project ID** is missing from the `DATABASE_URL` secret.")
+            st.markdown("""
+                Your link should look like this:
+                `postgresql://postgres.<YOUR-PROJECT-ID>:[YOUR-PASSWORD]@...`
+                
+                Go to your Supabase dashboard, copy the correct **URI** link (with connection pooling), and paste it into your Streamlit Secrets.
+            """)
+        elif "password authentication failed" in error_str:
+            st.warning("This means the password in your `DATABASE_URL` secret is incorrect.")
+            st.markdown("Please double-check the password, update it in your Streamlit Secrets, and remember to URL-encode any special characters (e.g., change `@` to `%40`).")
+        else:
+            st.warning("This is often caused by special characters (like `@`, `#`, `?`) in your database password that break the connection URL.")
+            st.markdown("You must URL-encode them. For example, change `@` to `%40` in your password inside the `DATABASE_URL` secret.")
+        st.info(f"Full Technical Error: {e}")
         st.stop()
 
 def get_db_connection():
