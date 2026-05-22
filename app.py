@@ -249,8 +249,13 @@ if not st.session_state.logged_in:
     st.markdown("<br><br><br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.markdown("<h2 style='text-align: center; color: #F9FAFB;'>Authentication Required</h2>", unsafe_allow_html=True)
-        st.markdown("<p style='text-align: center; color: #9CA3AF;'>Enter the master password to access the system.</p>", unsafe_allow_html=True)
+        st.markdown("""
+            <div style='text-align: center;'>
+                <img src='https://cdn-icons-png.flaticon.com/512/8074/8074804.png' width='90' style='margin-bottom: 10px; filter: drop-shadow(0px 4px 6px rgba(251,191,36,0.2));'>
+            </div>
+        """, unsafe_allow_html=True)
+        st.markdown("<h2 style='text-align: center; color: #F9FAFB;'>EduManage Pro</h2>", unsafe_allow_html=True)
+        st.markdown("<p style='text-align: center; color: #9CA3AF;'>Enter the master password to access the secure system.</p>", unsafe_allow_html=True)
         
         password = st.text_input("Master Password", type="password", placeholder="••••••••")
         if st.button("Authenticate"):
