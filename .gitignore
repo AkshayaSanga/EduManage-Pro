@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local database and authentication files
+*.db
+*.db-journal
+auth.key
+
+# Environment variables
+.env
+
+# Virtual environment
+.venv/
+venv/
